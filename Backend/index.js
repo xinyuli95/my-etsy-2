@@ -121,6 +121,29 @@ app.post('/login',function(req,res){
 
 });
 
+app.post('/login', expressAsyncHandler(async (req, res) => {
+    console.log("Req Body : ", req);
+    const user = await User.findOne({ email: req.body.email});
+    
+    if(user) {
+
+        if(req.body.password === user.password) {
+            res.send({
+                _id: user._id,
+                name: user.name,
+                email: user.email,
+                token: generateToken(user)
+            });
+        }else{
+            res.status(401).send({ message: 'Wrong password'});
+        }
+    }else{
+        res.status(401).send({ message: 'Email does not exist'});
+    }
+     
+})
+);
+
 app.post('/signup', expressAsyncHandler(async ({body}, res) => {
     console.log("Req Body : ", body);
 
