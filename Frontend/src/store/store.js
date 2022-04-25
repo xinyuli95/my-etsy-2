@@ -1,11 +1,21 @@
 import { createStore, compose, applyMiddleware, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
+import { signupReducer } from '../reducers/userReducer';
 
 // TODO: set initial state
-const initialState = {};
+const initialState = {
+    // user info initial state
+    // userSignin: {
+    //    userInfo: localStorage.getItem('userInfo') 
+    //        ? JSON.parse(localStorage.getItem('userInfo')) 
+    //        : null
+    //},
+};
 
 // TODO: create reducers
-const reducer = combineReducers({});
+const reducer = combineReducers({
+    signupStore: signupReducer,
+});
 
 // register with Chrome Redux extension
 const storeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -13,7 +23,7 @@ const storeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
     reducer, 
     initialState, 
-    composeEnhancer(applyMiddleware(thunk))
+    storeEnhancers(applyMiddleware(thunk))
 );
 
 export default store;
