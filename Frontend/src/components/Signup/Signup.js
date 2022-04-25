@@ -26,6 +26,7 @@ function Signup(props) {
         e.preventDefault();
         dispatch(signup(username, email, password)); 
     }
+    
     //redirect based on successful login
     useEffect(() => {
         let redirectVar = null;

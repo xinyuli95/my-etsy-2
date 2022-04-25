@@ -10,6 +10,7 @@ const mongoose = require('mongoose');
 app.set('view engine', 'ejs');
 
 const User = require('./Models/userModel');
+const Item = require('./Models/itemModel');
 const { generateToken } = require('./auth');
 
 
@@ -53,16 +54,16 @@ var Users = [
 ]
 
 var items = [
-  {"itemID" : "1", "Title" : "item 1", "price" : 1.5},
-  {"itemID" : "2", "Title" : "item 2", "price" : 2.5},
-  {"itemID" : "3", "Title" : "item 3", "price" : 3.5}
+  {itemID : 1, Title : "item 1", price : 1.5},
+  {itemID : 2, Title : "item 2", price : 2.5},
+  {itemID : 3, Title : "item 3", price : 3.5}
 ]
 
 var shops = [{"shopID": "1", "owner": "admin", "items": [{"itemID" : "1", "Title" : "item 1", "price" : 1.5}]}]
 
 //Route to get All items when user visits the Home Page
 app.get('/home', function(req,res){
-    console.log("Inside Home Login");    
+    console.log("Inside Home");    
     res.writeHead(200,{
         'Content-Type' : 'application/json'
     });
@@ -86,40 +87,6 @@ app.post('/search', function(req,res){
     res.end(JSON.stringify(results));
     
 })
-
-//Route to handle Post Request Call
-app.post('/login',function(req,res){
-    
-    // Object.keys(req.body).forEach(function(key){
-    //     req.body = JSON.parse(key);
-    // });
-    // var username = req.body.username;
-    // var password = req.body.password;
-    console.log("Inside Login Post Request");
-    //console.log("Req Body : ", username + "password : ",password);
-    console.log("Req Body : ",req.body);
-    console.log("Users: ",Users);
-    
-    const result = Users.filter((user) => {
-        return user.username === req.body.username && user.password === req.body.password;    
-    });
-
-    // No user found
-    if( result.length === 0 ){
-        res.writeHead(200,{
-            'Content-Type' : 'text/plain'
-        });
-        res.end("Failed Login");
-    }else{
-        res.cookie('cookie',result[0].username,{maxAge: 900000, httpOnly: false, path : '/'});
-        req.session.user = result[0];
-        res.writeHead(200,{
-            'Content-Type' : 'text/plain'
-        });
-        res.end("Successful Login");
-    };
-
-});
 
 app.post('/login', expressAsyncHandler(async (req, res) => {
     console.log("Req Body : ", req);
