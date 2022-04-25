@@ -1,6 +1,6 @@
 import { createStore, compose, applyMiddleware, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
-import { signupReducer } from '../reducers/userReducer';
+import { signupReducer, loginReducer } from '../reducers/userReducer';
 
 // TODO: set initial state
 const initialState = {
@@ -15,6 +15,7 @@ const initialState = {
 // TODO: create reducers
 const reducer = combineReducers({
     signupStore: signupReducer,
+    loginStore: loginReducer,
 });
 
 // register with Chrome Redux extension

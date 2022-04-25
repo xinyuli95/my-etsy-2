@@ -30,7 +30,7 @@ function Signup(props) {
     useEffect(() => {
         let redirectVar = null;
         if(userInfo) {
-            props.history.push("/login");
+            props.history.push("/home");
         }
     }, [userInfo]);
 
